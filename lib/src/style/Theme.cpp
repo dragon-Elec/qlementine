@@ -382,6 +382,14 @@ bool Theme::initializeFromJson(QJsonDocument const& jsonDoc) {
     if (!jsonObj.contains(QStringLiteral("menuItemHoverColorForeground"))) {
       menuItemHoverColorForeground = primaryColorForegroundHovered;
     }
+    TRY_GET_COLOR_ATTRIBUTE(jsonObj, menuItemPressedColor);
+    if (!jsonObj.contains(QStringLiteral("menuItemPressedColor"))) {
+      menuItemPressedColor = primaryColorHovered;
+    }
+    TRY_GET_COLOR_ATTRIBUTE(jsonObj, menuItemPressedColorForeground);
+    if (!jsonObj.contains(QStringLiteral("menuItemPressedColorForeground"))) {
+      menuItemPressedColorForeground = primaryColorForegroundPressed;
+    }
     TRY_GET_COLOR_ATTRIBUTE(jsonObj, primaryAlternativeColor);
     TRY_GET_COLOR_ATTRIBUTE(jsonObj, primaryAlternativeColorHovered);
     TRY_GET_COLOR_ATTRIBUTE(jsonObj, primaryAlternativeColorPressed);
