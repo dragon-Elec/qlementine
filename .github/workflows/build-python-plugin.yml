@@ -1,0 +1,96 @@
+name: Build Python Plugin
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-plugin:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            qt6-base-dev \
+            qt6-base-private-dev \
+            libqt6svg6-dev
+            
+      - name: Create Plugin Source
+        run: |
+          mkdir -p python_bridge
+          
+          # Write the CMakeLists.txt
+          cat << 'EOF' > python_bridge/CMakeLists.txt
+          cmake_minimum_required(VERSION 3.16)
+          project(QlementinePlugin)
+
+          set(CMAKE_CXX_STANDARD 17)
+          set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+          find_package(Qt6 COMPONENTS Core Gui Widgets Svg REQUIRED)
+
+          set(CMAKE_AUTOMOC ON)
+          set(CMAKE_AUTORCC ON)
+          set(CMAKE_AUTOUIC ON)
+
+          add_subdirectory(../lib qlementine_lib)
+
+          add_library(qlementineplugin MODULE QlementinePlugin.cpp)
+          target_link_libraries(qlementineplugin PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Svg qlementine)
+          EOF
+          
+          # Write the Plugin C++ code
+          cat << 'EOF' > python_bridge/QlementinePlugin.cpp
+          #include <QStylePlugin>
+          #include <oclero/qlementine/style/QlementineStyle.hpp>
+
+          class QlementinePlugin : public QStylePlugin {
+              Q_OBJECT
+              Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QStyleFactoryInterface" FILE "qlementine.json")
+
+          public:
+              QlementinePlugin(QObject *parent = nullptr) : QStylePlugin(parent) {}
+
+              QStringList keys() const override {
+                  return QStringList() << "Qlementine";
+              }
+
+              QStyle *create(const QString &key) override {
+                  if (key.compare("Qlementine", Qt::CaseInsensitive) == 0) {
+                      auto* style = new oclero::qlementine::QlementineStyle();
+                      style->setAnimationsEnabled(true);
+                      return style;
+                  }
+                  return nullptr;
+              }
+          };
+
+          #include "QlementinePlugin.moc"
+          EOF
+          
+          # Write the Plugin JSON metadata
+          cat << 'EOF' > python_bridge/qlementine.json
+          {
+              "Keys": [ "Qlementine" ]
+          }
+          EOF
+
+      - name: Build Plugin
+        run: |
+          cd python_bridge
+          mkdir build
+          cd build
+          cmake ..
+          make -j$(nproc)
+          
+      - name: Upload Plugin Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: libqlementineplugin.so
+          path: python_bridge/build/libqlementineplugin.so
