@@ -80,6 +80,8 @@ public: // Values.
   QColor primaryColorForegroundDisabled{ 0xecf6ff };
   QColor primaryColorForegroundTransparent{ QRgba64::fromArgb32(0x00ffffff) };
 
+  QColor menuItemHoverColor{ 0x1890ff };
+  QColor menuItemHoverColorForeground{ 0xffffff };
   QColor primaryAlternativeColor{ 0x106ef9 };
   QColor primaryAlternativeColorHovered{ 0x107bfd };
   QColor primaryAlternativeColorPressed{ 0x108bfd };

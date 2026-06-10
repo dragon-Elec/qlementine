@@ -5540,7 +5540,7 @@ QColor const& QlementineStyle::menuSeparatorColor() const {
 QColor const& QlementineStyle::menuItemBackgroundColor(MouseState const mouse) const {
   switch (mouse) {
     case MouseState::Hovered:
-      return _impl->theme.primaryColor;
+      return _impl->theme.menuItemHoverColor;
     case MouseState::Pressed:
       return _impl->theme.primaryColorHovered;
     case MouseState::Disabled:
@@ -5554,7 +5554,7 @@ QColor const& QlementineStyle::menuItemBackgroundColor(MouseState const mouse) c
 QColor const& QlementineStyle::menuItemForegroundColor(MouseState const mouse) const {
   switch (mouse) {
     case MouseState::Hovered:
-      return _impl->theme.primaryColorForegroundHovered;
+      return _impl->theme.menuItemHoverColorForeground;
     case MouseState::Pressed:
       return _impl->theme.primaryColorForegroundPressed;
     case MouseState::Disabled:
