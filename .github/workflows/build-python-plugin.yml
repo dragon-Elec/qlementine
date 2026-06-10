@@ -17,10 +17,15 @@ jobs:
           sudo apt-get install -y \
             build-essential \
             cmake \
-            qt6-base-dev \
-            qt6-base-private-dev \
-            libqt6svg6-dev
+            libgl1-mesa-dev \
+            libxkbcommon-dev
             
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.8.0'
+          modules: 'qtsvg'
+          
       - name: Create Plugin Source
         run: |
           # Write the Plugin C++ code
