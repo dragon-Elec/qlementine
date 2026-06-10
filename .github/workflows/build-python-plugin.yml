@@ -71,7 +71,7 @@ jobs:
           mkdir build
           cd build
           cmake -DQLEMENTINE_SANDBOX=OFF -DQLEMENTINE_SHOWCASE=ON ..
-          make -j$(nproc) qlementineplugin qlementine_showcase
+          make -j$(nproc) qlementineplugin showcase
           
       - name: Upload Plugin Artifact
         uses: actions/upload-artifact@v4
@@ -82,5 +82,5 @@ jobs:
       - name: Upload Showcase Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: qlementine_showcase
-          path: build/showcase/qlementine_showcase
+          name: showcase
+          path: build/showcase/showcase
