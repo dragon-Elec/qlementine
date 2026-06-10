@@ -39,10 +39,6 @@ jobs:
           public:
               QlementinePlugin(QObject *parent = nullptr) : QStylePlugin(parent) {}
 
-              QStringList keys() const override {
-                  return QStringList() << "Qlementine";
-              }
-
               QStyle *create(const QString &key) override {
                   if (key.compare("Qlementine", Qt::CaseInsensitive) == 0) {
                       auto* style = new oclero::qlementine::QlementineStyle();
