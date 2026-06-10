@@ -23,30 +23,8 @@ jobs:
             
       - name: Create Plugin Source
         run: |
-          mkdir -p python_bridge
-          
-          # Write the CMakeLists.txt
-          cat << 'EOF' > python_bridge/CMakeLists.txt
-          cmake_minimum_required(VERSION 3.16)
-          project(QlementinePlugin)
-
-          set(CMAKE_CXX_STANDARD 17)
-          set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-          find_package(Qt6 COMPONENTS Core Gui Widgets Svg REQUIRED)
-
-          set(CMAKE_AUTOMOC ON)
-          set(CMAKE_AUTORCC ON)
-          set(CMAKE_AUTOUIC ON)
-
-          add_subdirectory(../lib qlementine_lib)
-
-          add_library(qlementineplugin MODULE QlementinePlugin.cpp)
-          target_link_libraries(qlementineplugin PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Svg qlementine)
-          EOF
-          
           # Write the Plugin C++ code
-          cat << 'EOF' > python_bridge/QlementinePlugin.cpp
+          cat << 'EOF' > lib/src/QlementinePlugin.cpp
           #include <QStylePlugin>
           #include <oclero/qlementine/style/QlementineStyle.hpp>
 
@@ -75,22 +53,28 @@ jobs:
           EOF
           
           # Write the Plugin JSON metadata
-          cat << 'EOF' > python_bridge/qlementine.json
+          cat << 'EOF' > lib/src/qlementine.json
           {
               "Keys": [ "Qlementine" ]
           }
           EOF
+          
+          # Append to root CMakeLists.txt
+          cat << 'EOF' >> CMakeLists.txt
+          
+          add_library(qlementineplugin MODULE lib/src/QlementinePlugin.cpp)
+          target_link_libraries(qlementineplugin PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets Qt6::Svg qlementine)
+          EOF
 
       - name: Build Plugin
         run: |
-          cd python_bridge
           mkdir build
           cd build
-          cmake ..
-          make -j$(nproc)
+          cmake -DQLEMENTINE_SANDBOX=OFF -DQLEMENTINE_SHOWCASE=OFF ..
+          make -j$(nproc) qlementineplugin
           
       - name: Upload Plugin Artifact
         uses: actions/upload-artifact@v4
         with:
           name: libqlementineplugin.so
-          path: python_bridge/build/libqlementineplugin.so
+          path: build/libqlementineplugin.so
