@@ -52,7 +52,7 @@ public:
 
   Theme const& theme() const;
   void setTheme(Theme const& theme);
-  void setThemeJsonPath(QString const& jsonPath);
+  Q_INVOKABLE void setThemeJsonPath(QString const& jsonPath);
   bool animationsEnabled() const;
   void setAnimationsEnabled(bool enabled);
 
