@@ -39,6 +39,12 @@
   "primaryColorForegroundDisabled": "#ecf6ff",
   "primaryColorForegroundHovered": "#ffffff",
   "primaryColorForegroundPressed": "#ffffff",
+  "menuItemHoverColor": "#1890ff22",
+  "menuItemHoverColorForeground": "#404040",
+  "menuItemPressedColor": "#1890ff44",
+  "menuItemPressedColorForeground": "#404040",
+  "selectionColor": "#1890ff33",
+  "selectionColorForeground": "#404040",
 
   "secondaryColor": "#404040",
   "secondaryColorHovered": "#333333",
