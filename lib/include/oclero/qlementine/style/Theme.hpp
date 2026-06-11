@@ -84,6 +84,8 @@ public: // Values.
   QColor menuItemHoverColorForeground{ 0xffffff };
   QColor menuItemPressedColor{ 0x2c9dff };
   QColor menuItemPressedColorForeground{ 0xffffff };
+  QColor selectionColor{ 0x1890ff };
+  QColor selectionColorForeground{ 0xffffff };
   QColor primaryAlternativeColor{ 0x106ef9 };
   QColor primaryAlternativeColorHovered{ 0x107bfd };
   QColor primaryAlternativeColorPressed{ 0x108bfd };

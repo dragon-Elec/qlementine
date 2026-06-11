@@ -390,6 +390,14 @@ bool Theme::initializeFromJson(QJsonDocument const& jsonDoc) {
     if (!jsonObj.contains(QStringLiteral("menuItemPressedColorForeground"))) {
       menuItemPressedColorForeground = primaryColorForegroundPressed;
     }
+    TRY_GET_COLOR_ATTRIBUTE(jsonObj, selectionColor);
+    if (!jsonObj.contains(QStringLiteral("selectionColor"))) {
+      selectionColor = primaryColor;
+    }
+    TRY_GET_COLOR_ATTRIBUTE(jsonObj, selectionColorForeground);
+    if (!jsonObj.contains(QStringLiteral("selectionColorForeground"))) {
+      selectionColorForeground = primaryColorForeground;
+    }
     TRY_GET_COLOR_ATTRIBUTE(jsonObj, primaryAlternativeColor);
     TRY_GET_COLOR_ATTRIBUTE(jsonObj, primaryAlternativeColorHovered);
     TRY_GET_COLOR_ATTRIBUTE(jsonObj, primaryAlternativeColorPressed);
@@ -549,6 +557,10 @@ QJsonDocument Theme::toJson() const {
 
   SET_COLOR(jsonObj, menuItemHoverColor);
   SET_COLOR(jsonObj, menuItemHoverColorForeground);
+  SET_COLOR(jsonObj, menuItemPressedColor);
+  SET_COLOR(jsonObj, menuItemPressedColorForeground);
+  SET_COLOR(jsonObj, selectionColor);
+  SET_COLOR(jsonObj, selectionColorForeground);
   SET_COLOR(jsonObj, primaryAlternativeColor);
   SET_COLOR(jsonObj, primaryAlternativeColorHovered);
   SET_COLOR(jsonObj, primaryAlternativeColorPressed);
@@ -683,6 +695,10 @@ bool Theme::operator==(const Theme& other) const {
 
     && menuItemHoverColor == other.menuItemHoverColor
     && menuItemHoverColorForeground == other.menuItemHoverColorForeground
+    && menuItemPressedColor == other.menuItemPressedColor
+    && menuItemPressedColorForeground == other.menuItemPressedColorForeground
+    && selectionColor == other.selectionColor
+    && selectionColorForeground == other.selectionColorForeground
     && primaryAlternativeColor == other.primaryAlternativeColor
     && primaryAlternativeColorHovered == other.primaryAlternativeColorHovered
     && primaryAlternativeColorPressed == other.primaryAlternativeColorPressed

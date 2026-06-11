@@ -5368,15 +5368,15 @@ QColor QlementineStyle::listItemBackgroundColor(MouseState const mouse, Selectio
   if (isActive) {
     switch (mouse) {
       case MouseState::Pressed:
-        return isSelected ? _impl->theme.primaryColor : _impl->theme.neutralColor;
+        return isSelected ? _impl->theme.selectionColor : _impl->theme.neutralColor;
       case MouseState::Hovered:
-        return isSelected ? _impl->theme.primaryColor : _impl->theme.neutralColorDisabled;
+        return isSelected ? _impl->theme.selectionColor : _impl->theme.neutralColorDisabled;
       case MouseState::Disabled:
-        return isSelected ? _impl->theme.primaryColorDisabled : _impl->theme.neutralColorTransparent;
+        return isSelected ? qlementine::colorWithAlpha(_impl->theme.selectionColor, 128) : _impl->theme.neutralColorTransparent;
       case MouseState::Transparent:
       case MouseState::Normal:
       default:
-        return isSelected ? _impl->theme.primaryColor : _impl->theme.neutralColorTransparent;
+        return isSelected ? _impl->theme.selectionColor : _impl->theme.neutralColorTransparent;
     }
   } else {
     switch (mouse) {
@@ -5403,13 +5403,13 @@ QColor const& QlementineStyle::listItemForegroundColor(
   if (isActive) {
     switch (mouse) {
       case MouseState::Disabled:
-        return isSelected ? _impl->theme.primaryColorForegroundDisabled : _impl->theme.secondaryColorDisabled;
+        return isSelected ? _impl->theme.primaryColorForegroundDisabled : _impl->theme.secondaryColorDisabled; // Keep disabled foreground as primaryColorForegroundDisabled or secondaryColorDisabled
       case MouseState::Hovered:
       case MouseState::Pressed:
       case MouseState::Transparent:
       case MouseState::Normal:
       default:
-        return isSelected ? _impl->theme.primaryColorForeground : _impl->theme.secondaryColor;
+        return isSelected ? _impl->theme.selectionColorForeground : _impl->theme.secondaryColor;
     }
   } else {
     switch (mouse) {
