@@ -5569,9 +5569,9 @@ QColor const& QlementineStyle::menuItemForegroundColor(MouseState const mouse) c
 QColor const& QlementineStyle::menuItemSecondaryForegroundColor(MouseState const mouse) const {
   switch (mouse) {
     case MouseState::Hovered:
-      return _impl->theme.primaryColorForegroundHovered;
+      return _impl->theme.menuItemHoverColorSecondaryForeground;
     case MouseState::Pressed:
-      return _impl->theme.primaryColorForegroundPressed;
+      return _impl->theme.menuItemPressedColorSecondaryForeground;
     case MouseState::Disabled:
       return _impl->theme.secondaryAlternativeColorDisabled;
     case MouseState::Transparent:

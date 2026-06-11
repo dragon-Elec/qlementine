@@ -43,6 +43,8 @@
   "menuItemHoverColorForeground": "#ffffff",
   "menuItemPressedColor": "#5086ff55",
   "menuItemPressedColorForeground": "#ffffff",
+  "menuItemHoverColorSecondaryForeground": "#8b93ab",
+  "menuItemPressedColorSecondaryForeground": "#9ca4bc",
   "selectionColor": "#5086ff44",
   "selectionColorForeground": "#ffffff",
 
